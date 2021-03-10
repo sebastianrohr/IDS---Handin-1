@@ -2,13 +2,7 @@ import npyscreen
 from npyscreen.wgtitlefield import TitleText
 import json 
 import requests
-<<<<<<< HEAD
 import pyttsx3
-=======
-
-#Simon did it
-#kl 15:55
->>>>>>> a799f3faacf4cb8b29879c9c19a424a5c4b48caf
 
 class App(npyscreen.NPSAppManaged):
     def onStart(self):
