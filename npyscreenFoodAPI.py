@@ -3,6 +3,7 @@ from npyscreen.wgtitlefield import TitleText
 import json 
 import requests
 
+#Simon did it
 #kl 15:55
 
 class App(npyscreen.NPSAppManaged):
