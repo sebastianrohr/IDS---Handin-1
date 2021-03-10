@@ -2,8 +2,7 @@ import npyscreen
 from npyscreen.wgtitlefield import TitleText
 import json 
 import requests
-
-#kl 15:55
+import pyttsx3
 
 class App(npyscreen.NPSAppManaged):
     def onStart(self):
@@ -16,6 +15,12 @@ class FirstForm(npyscreen.ActionFormMinimal):
         self.add(npyscreen.ButtonPress, name="See course", when_pressed_function=self.ingredientsbtn_press, rely= 3) 
         self.add(npyscreen.TitleText, w_id="coursetextfield", name="Enter your course:", rely= 5)
         self.add(npyscreen.ButtonPress, name="See ingredients", when_pressed_function=self.coursebtn_press, rely= 7)
+        self.add(npyscreen.TitleFixedText, w_id="speechtextfield", editable= False, name="Text to speech:", rely= 11)
+        #self.add(npyscreen.Button, name="OFF", when_pressed_function=self.textToSpeechbtn_press, relx= 17, rely=11)
+        self.add(npyscreen.CheckBox, name="ON/OFF", when_toggled=self.textToSpeechbtn_press, relx= 18, rely=11)
+
+    def textToSpeechbtn_press(self):
+        message = "You can make these different courses: "
 
 
     def ingredientsbtn_press(self):
@@ -27,7 +32,13 @@ class FirstForm(npyscreen.ActionFormMinimal):
 
         for recipe in recipeInformation['results']:
             recipeStr += "\n" + recipe['title']
-
+            
+            if textToSpeechbtn_press == True:
+                engine = pyttsx3.init()
+                engine.say(recipeStr)
+                engine.say(recipeStr)
+                engine.runAndWait()
+                
         message = "You can make these different courses: " + recipeStr
         npyscreen.notify_confirm(message, title="Ingredients", wrap=True, wide=True, editw=1)
 
