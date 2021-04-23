@@ -31,6 +31,15 @@ class first_form(npyscreen.ActionForm):
         ingredient_information = get_information.json()
         return ingredient_information
 
+    def format_input(self, text):
+        new_text = ''
+        for letter in text:
+            if letter != ' ' and letter != '-' and letter != '/' and letter != '.':
+                new_text += letter
+            else:
+                new_text += ','
+        return new_text
+
     def ingredientsbtn_press(self): #Displays recipes based on given ingredients
         get_recipe = self.get_widget("ingredientstextfield").value
         URL = "http://www.recipepuppy.com/api/?i=" + get_recipe
@@ -39,7 +48,8 @@ class first_form(npyscreen.ActionForm):
         recipe_str = ""
         for recipe in recipe_information['results']:
            recipe_str += "\n" + recipe['title']
-        npyscreen.notify_confirm(recipe_str, title="You can make these different courses", wrap=True, wide=True, editw=1)
+        recipe_str1 = self.format_input(recipe_str)
+        npyscreen.notify_confirm(recipe_str1, title="You can make these different courses", wrap=True, wide=True, editw=1)
 
     def coursebtn_press(self): #Searches for recipes and displays ingredients
         overall_ingredients = self.ingredient_information_def()
