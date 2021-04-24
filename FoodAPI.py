@@ -14,7 +14,7 @@ class App(npyscreen.NPSAppManaged):
         
 class first_form(npyscreen.ActionForm):
     recipe_list = []
-    get_ingredients = ''
+    ingredients = ''
 
     def create(self):
         self.add(npyscreen.TitleText, w_id="ingredientstextfield", name="Enter your ingredients:", rely= 1)
@@ -26,10 +26,10 @@ class first_form(npyscreen.ActionForm):
 
         
     def ingredient_information_def(self): 
-        first_form.get_ingredients = self.get_widget("coursetextfield").value
-        URL = "http://www.recipepuppy.com/api/?q=" + first_form.get_ingredients
-        get_information = requests.get(url = URL)
-        ingredient_information = get_information.json()
+        first_form.ingredients = self.get_widget("coursetextfield").value
+        URL = "http://www.recipepuppy.com/api/?q=" + first_form.ingredients
+        information = requests.get(url = URL)
+        ingredient_information = information.json()
         return ingredient_information
 
     def format_input(self, text): # Function used to format the user-input string to the format the api uses
@@ -42,10 +42,10 @@ class first_form(npyscreen.ActionForm):
         return new_text
 
     def ingredientsbtn_press(self): # Displays recipes based on given ingredients
-        get_recipe = self.format_input(self.get_widget("ingredientstextfield").value)
-        URL = "http://www.recipepuppy.com/api/?i=" + get_recipe
-        get_information = requests.get(url = URL)
-        recipe_information = get_information.json()
+        recipe = self.format_input(self.get_widget("ingredientstextfield").value)
+        URL = "http://www.recipepuppy.com/api/?i=" + recipe
+        information = requests.get(url = URL)
+        recipe_information = information.json()
         recipe_str = ""
         for recipe in recipe_information['results']:
            recipe_str += "\n" + recipe['title']
@@ -71,7 +71,7 @@ class first_form(npyscreen.ActionForm):
     def logbtn_press(self): # A function that logs activity in the app 
         npyscreen.notify_confirm(first_form.recipe_list, title="History", wrap=True, wide=True, editw=1) #Print the string in the TUI
         log_message = ' '.join(first_form.recipe_list)
-        log.info (f'Course search: {first_form.get_ingredients.upper()} -- Ingredients for course: {log_message.upper()}') # string that is logged
+        log.info (f'Course search: {first_form.ingredients.upper()} -- Ingredients for course: {log_message.upper()}') # string that is logged
 
     def on_ok(self):
         self.parentApp.setNextForm(None) 
