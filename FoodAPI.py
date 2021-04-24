@@ -26,7 +26,7 @@ class first_form(npyscreen.ActionForm):
 
         
     def ingredient_information_def(self): 
-        first_form.get_ingredients += self.get_widget("coursetextfield").value
+        first_form.get_ingredients = self.get_widget("coursetextfield").value
         URL = "http://www.recipepuppy.com/api/?q=" + first_form.get_ingredients
         get_information = requests.get(url = URL)
         ingredient_information = get_information.json()
@@ -68,7 +68,7 @@ class first_form(npyscreen.ActionForm):
         if overall_ingredients['results'][0]['title'] not in first_form.recipe_list:
             first_form.recipe_list.append(overall_ingredients['results'][0]['title'])
 
-    def logbtn_press(self): # A function that logs activity in the app
+    def logbtn_press(self): # A function that logs activity in the app 
         npyscreen.notify_confirm(first_form.recipe_list, title="History", wrap=True, wide=True, editw=1) #Print the string in the TUI
         log_message = ' '.join(first_form.recipe_list)
         log.info (f'Course search: {first_form.get_ingredients.upper()} -- Ingredients for course: {log_message.upper()}') # string that is logged
