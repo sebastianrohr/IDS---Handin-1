@@ -53,7 +53,8 @@ class first_form(npyscreen.ActionForm):
 
     def coursebtn_press(self): # Searches for recipes and displays ingredients
         overall_ingredients = self.ingredient_information_def()
-        ingredient_str = "\n" + overall_ingredients['results'][0]['ingredients']
+        ingredient_str = overall_ingredients['results'][0]['ingredients']
+        first_form.ingredients = ingredient_str 
         npyscreen.notify_confirm(ingredient_str, title="You need these ingredients for the course '" + overall_ingredients['results'][0]['title'] + "':", wrap=True, wide=True, editw=1)
         if overall_ingredients['results'][0]['title'] not in first_form.recipe_list: #Avoids duplications or already saved recipes
             first_form.recipe_list.append(overall_ingredients['results'][0]['title'])
@@ -70,8 +71,8 @@ class first_form(npyscreen.ActionForm):
 
     def logbtn_press(self): # A function that logs activity in the app 
         npyscreen.notify_confirm(first_form.recipe_list, title="History", wrap=True, wide=True, editw=1) #Print the string in the TUI
-        log_message = ' '.join(first_form.recipe_list)
-        log.info (f'Course search: {first_form.ingredients.upper()} -- Ingredients for course: {log_message.upper()}') # string that is logged
+        course_name = ' '.join(first_form.recipe_list)
+        log.info (f'Course search: {course_name.upper()} -- Ingredients for course: {(first_form.ingredients)} \n') # string that is logged
 
     def on_ok(self):
         self.parentApp.setNextForm(None) 
